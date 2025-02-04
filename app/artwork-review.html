@@ -3,7 +3,7 @@
 
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<title>ArtGallery | Artwork Review </title>
+	<title>ArtGallery | Artwork Submission Review </title>
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 		name='viewport' />
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -84,11 +84,10 @@
 						</a>
 					</li>
 					<hr class="my-1">
-
 					<li class="nav-item">
-						<a href="./manage-artwork.html">
+						<a href="./artworks.html">
 							<i class="la la-photo"></i>
-							<p>Manage Artworks</p>
+							<p>Artist Artworks</p>
 						</a>
 					</li>
 					<li class="nav-item">
@@ -105,9 +104,9 @@
 					</li>
 					<hr class="my-1">
 					<li class="nav-item">
-						<a href="./user-management.html">
+						<a href="./users.html">
 							<i class="la la-users"></i>
-							<p>User Management</p>
+							<p>Manage User</p>
 						</a>
 					</li>
 					<li class="nav-item active">
@@ -133,9 +132,60 @@
 		<div class="main-panel">
 			<div class="content">
 				<div class="container-fluid">
-					<h4 class="page-title">Artwork Review</h4>
+					<div class="d-flex justify-content-between align-items-center mb-3">
+						<h5>Artwork Submission Review</h5>
+						<a href="./manage-artworks.html" class="btn btn-secondary btn-sm btn-rounded">Cancel</a>
+					</div>
 					<div class="row row-card-no-pd">
-						<!-- Contents here -->
+						<!-- Artwork Display -->
+						<div class="col-md-8">
+							<div class="card shadow-lg">
+								<div class="card-body">
+									<div class="position-relative">
+										<img src="./assets/img/Design.jpg" class="card-img">
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Order Section -->
+						<div class="col-md-4">
+							<div class="card">
+								<div class="card-body">
+									<h5 class="card-title">Artwork Details</h5>
+									<p class="text-muted">Review artwork and take action.</p>
+									<h6>Title: <span class="text-primary">Abstract Painting</span></h6>
+									<h6>Artist: <span class="text-success">
+											<a href="./artist-profile.html">@John Doe</a>
+										</span></h6>
+									<h6>Price: <span class="text-dark">₦50,000</span></h6>
+									<!-- <h6>Status: <span class="badge badge-warning">Pending</span></h6> -->
+									<h6>Description:</h6>
+									<p class="text-muted">
+										A beautiful abstract painting that explores vibrant colors and patterns.
+									</p>
+
+									<form>
+										<div class="form-group">
+											<label for="buyerID">Artist ID</label>
+											<input type="text" name="ArtistID" class="form-control" value="ArtistIDHere"
+												readonly>
+										</div>
+
+										<div class="pt-3">
+											<button type="submit" class="btn btn-outline-success btn-rounded btn-sm">
+												Approve Artwork</button>
+											<Approve class="btn btn-outline-danger btn-rounded btn-sm">
+												Reject Artwork</button>
+										</div>
+
+										<p class="text-center small text-muted mt-3">
+											Once approved, the artwork will be available for buyers.
+										</p>
+									</form>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

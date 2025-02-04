@@ -85,10 +85,10 @@
 					</li>
 					<hr class="my-1">
 
-					<li class="nav-item active">
-						<a href="./manage-artwork.html">
+					<li class="nav-item">
+						<a href="./artworks.html">
 							<i class="la la-photo"></i>
-							<p>Manage Artworks</p>
+							<p>Artist Artworks</p>
 						</a>
 					</li>
 					<li class="nav-item">
@@ -105,15 +105,15 @@
 					</li>
 					<hr class="my-1">
 					<li class="nav-item">
-						<a href="./user-management.html">
+						<a href="./users.html">
 							<i class="la la-users"></i>
-							<p>User Management</p>
+							<p>Manage User</p>
 						</a>
 					</li>
-					<li class="nav-item">
-						<a href="./artwork-review.html">
+					<li class="nav-item active">
+						<a href="./manage-artworks.html">
 							<i class="la la-check-circle"></i>
-							<p>Artwork Review</p>
+							<p>Manage Artworks</p>
 						</a>
 					</li>
 					<li class="nav-item">
@@ -134,65 +134,66 @@
 			<div class="content">
 				<div class="container-fluid">
 					<div class="d-flex justify-content-between align-items-center mb-3">
-						<h5>Manage Your Artwork</h5>
-						<a href="./upload-artwork.html" class="btn btn-primary btn-sm btn-rounded">Upload New
-							Artwork</a>
+						<h5>Manage Artwork Submissions</h5>
 					</div>
 
-					<div class="row justify-content-center">
-						<div class="col-md-12">
-							<div class="card shadow-lg">
-								<div class="card-body">
-									<p class="text-muted text-center small">
-										View and manage your submitted artworks. Status updates will be provided upon
-										review.
-									</p>
-									<div class="table-responsive">
-										<table class="table table-bordered table-hover">
-											<thead class="thead-light">
-												<tr>
-													<th>#</th>
-													<th>Title</th>
-													<th>Price (₦)</th>
-													<th>Submission Date</th>
-													<th>Status</th>
-													<th>Review Date</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>1</td>
-													<td>Abstract Painting</td>
-													<td>50,000</td>
-													<td>Feb 4, 2025</td>
-													<td><span class="badge badge-warning">Pending Approval</span></td>
-													<td>Feb 5, 2025</td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td>Portrait Sketch</td>
-													<td>35,000</td>
-													<td>Jan 30, 2025</td>
-													<td><span class="badge badge-success">Approved</span></td>
-													<td>Jan 31, 2025</td>
-												</tr>
-												<tr>
-													<td>3</td>
-													<td>Digital Illustration</td>
-													<td>25,000</td>
-													<td>Jan 28, 2025</td>
-													<td><span class="badge badge-danger">Rejected</span></td>
-													<td>Jan 29, 2025</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
+					<div class="card shadow-lg">
+						<div class="card-body">
+							<p class="text-muted small">
+								View, approve, or reject submitted artworks from artists.
+							</p>
+
+							<div class="table-responsive">
+								<table class="table table-bordered table-hover">
+									<thead class="thead-light">
+										<tr>
+											<th>#</th>
+											<th>Artwork Title</th>
+											<th>Artist</th>
+											<th>Price (₦)</th>
+											<th>Status</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>Abstract Painting</td>
+											<td>John Doe</td>
+											<td>50,000</td>
+											<td><span class="badge badge-warning">Pending</span></td>
+											<td>
+												<a href="./artwork-review.html">Review</a>
+											</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>Landscape Sketch</td>
+											<td>Jane Smith</td>
+											<td>30,000</td>
+											<td><span class="badge badge-success">Approved</span></td>
+											<td>
+												<a href="./artwork-review.html">Review</a>
+											</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>Digital Portrait</td>
+											<td>Michael Lee</td>
+											<td>45,000</td>
+											<td><span class="badge badge-danger">Rejected</span></td>
+											<td>
+												<a href="./artwork-review.html">Review</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
 
 		</div>
 	</div>
