@@ -3,7 +3,7 @@
 
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<title>ArtGallery | Upload Artwork </title>
+	<title>ArtGallery | Custom Artwork Overview </title>
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 		name='viewport' />
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -71,7 +71,7 @@
 							<p>Marketplace</p>
 						</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a href="./custom-artwork.html">
 							<i class="la la-paint-brush"></i>
 							<p>Custom Requests</p>
@@ -85,7 +85,7 @@
 					</li>
 					<hr class="my-1">
 
-					<li class="nav-item active">
+					<li class="nav-item">
 						<a href="./artworks.html">
 							<i class="la la-photo"></i>
 							<p>Artist Artworks</p>
@@ -134,45 +134,82 @@
 			<div class="content">
 				<div class="container-fluid">
 					<div class="d-flex justify-content-between align-items-center mb-3">
-						<h5>Upload Artwork</h5>
-						<a href="./artworks.html" class="btn btn-rounded btn-secondary btn-sm">Cancel</a>
+						<h5>Request Overview</h5>
+						<a href="./custom-artwork.html" class="btn btn-rounded btn-secondary btn-sm">Cancel</a>
 					</div>
-					<div class="row justify-content-center">
+					<div class="row row-card-no-pd">
+						<!-- Artwork Display -->
 						<div class="col-md-6">
 							<div class="card shadow-lg">
 								<div class="card-body">
-									<h5 class="card-title text-center">Submit Artwork</h5>
-									<p class="text-muted text-center small">
-										Upload your completed artwork for review and approval.
-									</p>
-
+									<h5 class="card-title">Your Order</h5>
 									<form>
 										<div class="form-group">
-											<label for="artworkTitle">Artwork Title</label>
-											<input type="text" id="artworkTitle" class="form-control"
-												placeholder="Enter artwork title">
+											<label for="buyerID">Request Title</label>
+											<input type="text" class="form-control"
+												value="Portrait of a landscape scene">
+										</div>
+										<div class="form-group">
+											<label>Artwork Specifications</label>
+											<textarea class="form-control"
+												rows="3">Detailed description of the artwork request.</textarea>
+										</div>
+										<div class="form-group">
+											<label>Offered Price (₦)</label>
+											<input type="text" class="form-control" value="₦50,000">
 										</div>
 
 										<div class="form-group">
-											<label for="artworkDescription">Description</label>
-											<textarea id="artworkDescription" class="form-control" rows="3"
-												placeholder="Describe your artwork..."></textarea>
+											<label for="sketchSample">Sketch Sample (Optional)</label>
+											<input type="file" id="sketchSample" class="form-control-file">
+										</div>
+										<div class="position-relative">
+											<label>Sketch Sample</label>
+											<br>
+											<img src="./assets/img/Sketch.jpg" class="card-img">
 										</div>
 
+										<div class="pt-3">
+											<button type="submit" class="btn btn-outline-primary btn-rounded btn-sm">
+												Update Request</button>
+											<button class="btn btn-outline-secondary btn-rounded btn-sm">
+												Cancel Request</button>
+										</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Order Section -->
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-body">
+									<h5 class="card-title">Artist Submission</h5>
+									<p class="card-text">Review the artist's submission and approve if satisfied.</p>
+									<form>
+										<p class="font-weight-bold">Status: <span class="text-primary">Pending</span>
+										</p>
 										<div class="form-group">
-											<label for="artworkPrice">Price (₦)</label>
-											<input type="number" id="artworkPrice" class="form-control"
-												placeholder="Enter price">
+											<label>Handle (Artist) By:</label>
+											<input type="text" class="form-control" value="@ArtByJohn">
 										</div>
-
+										<div class="position-relative">
+											<label>Artist Submission</label>
+											<br>
+											<img src="./assets/img/Design.jpg" class="card-img">
+										</div>
 										<div class="form-group">
-											<label for="artworkImage">Upload Artwork</label>
-											<input type="file" id="artworkImage" class="form-control-file">
+											<label>Comment</label>
+											<textarea class="form-control"
+												rows="3">Provide feedback on the submission...</textarea>
 										</div>
 
-										<button type="submit" class="btn btn-primary btn-block btn-rounded mb-2">
-											Submit Artwork
-										</button>
+										<div class="pt-1">
+											<button type="submit" class="btn btn-outline-success btn-rounded btn-sm">
+												Approve Submission</button>
+											<button class="btn btn-outline-danger btn-rounded btn-sm">
+												Reject Submission</button>
+										</div>
+									</form>
 									</form>
 								</div>
 							</div>
@@ -180,7 +217,6 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 	</div>

@@ -123,7 +123,7 @@
 						</a>
 					</li>
 					<li class="nav-item update-pro">
-						<button class="btn-sm btn-rounded btn-outline-secondary">
+						<button class="btn-sm btn-rounded btn-outline-secondary" onclick="confirmUpgrade(event)">
 							<p>Upgrade to <b>Artist</b></p>
 						</button>
 					</li>
@@ -136,6 +136,32 @@
 					<h4 class="page-title">Dashboard</h4>
 					<div class="row row-card-no-pd">
 						<div class="col-md-12">
+							<!-- Filter Form -->
+							<form method="GET" action="#">
+								<div class="row">
+									<div class="col-md-3">
+										<select class="form-control form-control" name="category">
+											<option value="">Select Category</option>
+											<option value="Painting">Painting</option>
+											<option value="Sculpture">Sculpture</option>
+										</select>
+									</div>
+									<div class="col-md-3">
+										<input type="text" name="artist" class="form-control" placeholder="Artist">
+									</div>
+									<div class="col-md-2">
+										<input type="number" name="price_min" class="form-control"
+											placeholder="Min Price">
+									</div>
+									<div class="col-md-2">
+										<input type="number" name="price_max" class="form-control"
+											placeholder="Max Price">
+									</div>
+									<div class="col-md-2">
+										<button type="submit" class="btn btn-primary w-100">Filter</button>
+									</div>
+								</div>
+							</form>
 							<div class="card">
 								<div class="card-body">
 									<!-- Start -->
@@ -235,6 +261,6 @@
 <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
 <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 <script src="assets/js/ready.min.js"></script>
-<!-- <script src="assets/js/demo.js"></script> -->
+<script src="assets/js/demo.js"></script>
 
 </html>

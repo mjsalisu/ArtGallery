@@ -123,7 +123,7 @@
 						</a>
 					</li>
 					<li class="nav-item update-pro">
-						<button class="btn-sm btn-rounded btn-outline-secondary">
+						<button class="btn-sm btn-rounded btn-outline-secondary" onclick="confirmUpgrade(event)">
 							<p>Upgrade to <b>Artist</b></p>
 						</button>
 					</li>
@@ -133,12 +133,72 @@
 		<div class="main-panel">
 			<div class="content">
 				<div class="container-fluid">
-					<h4 class="page-title">Custom Orders</h4>
-					<div class="row row-card-no-pd">
-						<!-- Contents here -->
+					<div class="d-flex justify-content-between align-items-center mb-3">
+						<h5>Custom Artwork Requests</h5>
 					</div>
+
+					<div class="row">
+						<div class="col-md-12 mx-auto">
+							<div class="card shadow-lg">
+								<div class="card-body">
+									<h5 class="card-title">Available Custom Orders</h5>
+									<p class="text-muted small">
+										Browse custom artwork requests and submit your participation.
+									</p>
+
+									<div class="table-responsive">
+										<table class="table table-bordered table-hover">
+											<thead class="thead-light">
+												<tr>
+													<th>#</th>
+													<th>Request Title</th>
+													<th>Buyer</th>
+													<th>Artist</th>
+													<th>Budget (₦)</th>
+													<th>Status</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>1</td>
+													<td>Fantasy Portrait</td>
+													<td>John Doe</td>
+													<td>-</td>
+													<td>₦50,000</td>
+													<td><span class="badge badge-warning">Open</span></td>
+													<td><a href="./orders-preview.html">Participate</a></td>
+												</tr>
+												<tr>
+													<td>2</td>
+													<td>Abstract Painting</td>
+													<td>Jane Smith</td>
+													<td>Michael Lee</td>
+													<td>₦30,000</td>
+													<td><span class="badge badge-success">In Progress</span></td>
+													<td>Already Taken</td>
+												</tr>
+												<tr>
+													<td>3</td>
+													<td>Realistic Sketch</td>
+													<td>Michael Lee</td>
+													<td>-</td>
+													<td>₦40,000</td>
+													<td><span class="badge badge-warning">Open</span></td>
+													<td><a href="./orders-preview.html">Participate</a></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
 				</div>
 			</div>
+
 		</div>
 	</div>
 	</div>
@@ -156,6 +216,6 @@
 <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
 <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 <script src="assets/js/ready.min.js"></script>
-<!-- <script src="assets/js/demo.js"></script> -->
+<script src="assets/js/demo.js"></script>
 
 </html>

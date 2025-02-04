@@ -123,7 +123,7 @@
 						</a>
 					</li>
 					<li class="nav-item update-pro">
-						<button class="btn-sm btn-rounded btn-outline-secondary">
+						<button class="btn-sm btn-rounded btn-outline-secondary" onclick="confirmUpgrade(event)">
 							<p>Upgrade to <b>Artist</b></p>
 						</button>
 					</li>
@@ -133,12 +133,60 @@
 		<div class="main-panel">
 			<div class="content">
 				<div class="container-fluid">
-					<h4 class="page-title">User Management</h4>
-					<div class="row row-card-no-pd">
-						<!-- Contents here -->
+					<div class="d-flex justify-content-between align-items-center mb-3">
+						<h5>Manage Users</h5>
 					</div>
+
+					<div class="card shadow-lg">
+						<div class="card-body">
+							<p class="text-muted small">View and manage all users, including buyers and artists.</p>
+							<div class="table-responsive">
+								<table class="table table-bordered table-hover">
+									<thead class=" thead-light">
+										<tr>
+											<th>#</th>
+											<th>Name</th>
+											<th>Email</th>
+											<th>Role</th>
+											<th>Total Purchases</th>
+											<th>Total Sales</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>John Doe</td>
+											<td>johndoe@example.com</td>
+											<td><span class="badge badge-secondary">Buyer</span></td>
+											<td>₦500,000</td>
+											<td>0</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>Jane Smith</td>
+											<td>janesmith@example.com</td>
+											<td><span class="badge badge-primary">Artist</span></td>
+											<td>0</td>
+											<td>₦150,000</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>Michael Lee</td>
+											<td>michaellee@example.com</td>
+											<td><span class="badge badge-primary">Artist</span></td>
+											<td>₦10,000</td>
+											<td>₦100,000</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
 				</div>
 			</div>
+
+
 		</div>
 	</div>
 	</div>
@@ -156,6 +204,6 @@
 <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
 <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 <script src="assets/js/ready.min.js"></script>
-<!-- <script src="assets/js/demo.js"></script> -->
+<script src="assets/js/demo.js"></script>
 
 </html>

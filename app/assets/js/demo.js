@@ -1,31 +1,49 @@
+function confirmUpgrade(event) {
+	event.preventDefault(); // Prevent unintended form submission or action
+
+	let confirmAction = confirm("Are you sure you want to upgrade to an Artist? This action cannot be reversed.");
+
+	if (confirmAction) {
+		// Proceed with upgrade (You can add logic here to submit a form or make an API call)
+		alert("Your account has been upgraded to Artist.");
+	} else {
+		// Do nothing if user cancels
+		alert("Upgrade cancelled.");
+	}
+}
 
 Circles.create({
-	id:           'task-complete',
-	radius:       75,
-	value:        80,
-	maxValue:     100,
-	width:        8,
-	text:         function(value){return value + '%';},
-	colors:       ['#eee', '#1D62F0'],
-	duration:     400,
-	wrpClass:     'circles-wrp',
-	textClass:    'circles-text',
+	id: 'task-complete',
+	radius: 75,
+	value: 80,
+	maxValue: 100,
+	width: 8,
+	text: function (value) { return value + '%'; },
+	colors: ['#eee', '#1D62F0'],
+	duration: 400,
+	wrpClass: 'circles-wrp',
+	textClass: 'circles-text',
 	styleWrapper: true,
-	styleText:    true
+	styleText: true
 })
 
-$.notify({
-	icon: 'la la-bell',
-	title: 'Bootstrap notify',
-	message: 'Turning standard Bootstrap alerts into "notify" like notifications',
-},{
-	type: 'success',
-	placement: {
-		from: "bottom",
-		align: "right"
-	},
-	time: 1000,
-});
+// Write a fun with title and body params for the notification
+function showNotification(title = '', body = 'Notification from My Dashboard') {
+	$.notify({
+		icon: 'la la-bell',
+		title: title,
+		message: body,
+	}, {
+		type: 'info',
+		placement: {
+			from: "bottom",
+			align: "right"
+		},
+		time: 600,
+	});
+}
+
+// showNotification();
 
 // monthlyChart
 
@@ -34,7 +52,7 @@ Chartist.Pie('#monthlyChart', {
 	series: [50, 20, 30]
 }, {
 	plugins: [
-	Chartist.plugins.tooltip()
+		Chartist.plugins.tooltip()
 	]
 });
 
@@ -42,13 +60,13 @@ Chartist.Pie('#monthlyChart', {
 var chart = new Chartist.Line('#trafficChart', {
 	labels: [1, 2, 3, 4, 5, 6, 7],
 	series: [
-	[5, 9, 7, 8, 5, 3, 5],
-	[6, 9, 5, 10, 2, 3, 7],
-	[2, 7, 4, 10, 7, 6, 2]
+		[5, 9, 7, 8, 5, 3, 5],
+		[6, 9, 5, 10, 2, 3, 7],
+		[2, 7, 4, 10, 7, 6, 2]
 	]
 }, {
 	plugins: [
-	Chartist.plugins.tooltip()
+		Chartist.plugins.tooltip()
 	],
 	low: 0,
 	height: "245px",
@@ -58,14 +76,14 @@ var chart = new Chartist.Line('#trafficChart', {
 var dataSales = {
 	labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 	series: [
-	[5, 4, 3, 7, 5, 10, 3, 4, 8, 10, 6, 8],
-	[3, 2, 9, 5, 4, 6, 4, 6, 7, 8, 7, 4]
+		[5, 4, 3, 7, 5, 10, 3, 4, 8, 10, 6, 8],
+		[3, 2, 9, 5, 4, 6, 4, 6, 7, 8, 7, 4]
 	]
 }
 
 var optionChartSales = {
 	plugins: [
-	Chartist.plugins.tooltip()
+		Chartist.plugins.tooltip()
 	],
 	seriesBarDistance: 10,
 	axisX: {
@@ -75,21 +93,21 @@ var optionChartSales = {
 }
 
 var responsiveChartSales = [
-['screen and (max-width: 640px)', {
-	seriesBarDistance: 5,
-	axisX: {
-		labelInterpolationFnc: function (value) {
-			return value[0];
+	['screen and (max-width: 640px)', {
+		seriesBarDistance: 5,
+		axisX: {
+			labelInterpolationFnc: function (value) {
+				return value[0];
+			}
 		}
-	}
-}]
+	}]
 ];
 
 Chartist.Bar('#salesChart', dataSales, optionChartSales, responsiveChartSales);
 
 $(".mapcontainer").mapael({
-	map : {
-		name : "world_countries",
+	map: {
+		name: "world_countries",
 		zoom: {
 			enabled: true,
 			maxLevel: 10
@@ -99,7 +117,7 @@ $(".mapcontainer").mapael({
 				fill: "#004a9b"
 				, opacity: 0.6
 			}
-		}, 
+		},
 		defaultArea: {
 			attrs: {
 				fill: "#e4e4e4"
@@ -119,45 +137,45 @@ $(".mapcontainer").mapael({
 		}
 	},
 	areas: {
-				// "department-56": {
-				// 	text: {content: "Morbihan", attrs: {"font-size": 10}},
-				// 	tooltip: {content: "<b>Morbihan</b> <br /> Bretagne"}
-				// },
-				"ID": {
-					tooltip: {content: "<b>Indonesia</b> <br /> Tempat Lahir Beta"},
-					attrs: {
-						fill: "#59d05d"
-					}
-					, attrsHover: {
-						fill: "#59d05d"
-					}
-				},
-				"RU": {
-					tooltip: {content: "<b>Russia</b>"},
-					attrs: {
-						fill: "#59d05d"
-					}
-					, attrsHover: {
-						fill: "#59d05d"
-					}					
-				},
-				"US": {
-					tooltip: {content: "<b>United State</b>"},
-					attrs: {
-						fill: "#59d05d"
-					}
-					, attrsHover: {
-						fill: "#59d05d"
-					}					
-				},
-				"AU": {
-					tooltip: {content: "<b>Australia</b>"},
-					attrs: {
-						fill: "#59d05d"
-					}
-					, attrsHover: {
-						fill: "#59d05d"
-					}					
-				}
-			},
-		});
+		// "department-56": {
+		// 	text: {content: "Morbihan", attrs: {"font-size": 10}},
+		// 	tooltip: {content: "<b>Morbihan</b> <br /> Bretagne"}
+		// },
+		"ID": {
+			tooltip: { content: "<b>Indonesia</b> <br /> Tempat Lahir Beta" },
+			attrs: {
+				fill: "#59d05d"
+			}
+			, attrsHover: {
+				fill: "#59d05d"
+			}
+		},
+		"RU": {
+			tooltip: { content: "<b>Russia</b>" },
+			attrs: {
+				fill: "#59d05d"
+			}
+			, attrsHover: {
+				fill: "#59d05d"
+			}
+		},
+		"US": {
+			tooltip: { content: "<b>United State</b>" },
+			attrs: {
+				fill: "#59d05d"
+			}
+			, attrsHover: {
+				fill: "#59d05d"
+			}
+		},
+		"AU": {
+			tooltip: { content: "<b>Australia</b>" },
+			attrs: {
+				fill: "#59d05d"
+			}
+			, attrsHover: {
+				fill: "#59d05d"
+			}
+		}
+	},
+});

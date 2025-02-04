@@ -112,7 +112,7 @@
 					<li class="nav-item active">
 						<a href="./artwork-review.html">
 							<i class="la la-check-circle"></i>
-							<p>Artwork Review</p>
+							<p>Manage Artworks</p>
 						</a>
 					</li>
 					<li class="nav-item">
@@ -122,7 +122,7 @@
 						</a>
 					</li>
 					<li class="nav-item update-pro">
-						<button class="btn-sm btn-rounded btn-outline-secondary">
+						<button class="btn-sm btn-rounded btn-outline-secondary" onclick="confirmUpgrade(event)">
 							<p>Upgrade to <b>Artist</b></p>
 						</button>
 					</li>
@@ -139,6 +139,7 @@
 					<div class="row row-card-no-pd">
 						<!-- Artwork Display -->
 						<div class="col-md-8">
+							<p class="text-muted">Review artwork submission and take action.</p>
 							<div class="card shadow-lg">
 								<div class="card-body">
 									<div class="position-relative">
@@ -152,9 +153,7 @@
 						<div class="col-md-4">
 							<div class="card">
 								<div class="card-body">
-									<h5 class="card-title">Artwork Details</h5>
-									<p class="text-muted">Review artwork and take action.</p>
-									<h6>Title: <span class="text-primary">Abstract Painting</span></h6>
+									<h6>Title: Abstract Painting</h6>
 									<h6>Artist: <span class="text-success">
 											<a href="./artist-profile.html">@John Doe</a>
 										</span></h6>
@@ -206,6 +205,6 @@
 <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
 <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 <script src="assets/js/ready.min.js"></script>
-<!-- <script src="assets/js/demo.js"></script> -->
+<script src="assets/js/demo.js"></script>
 
 </html>
