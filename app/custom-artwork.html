@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>ArtGallery | Custom Artwork Request </title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+		name='viewport' />
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+	<link rel="stylesheet" href="assets/css/ready.css">
+	<link rel="stylesheet" href="assets/css/demo.css">
+</head>
+
+<body>
+	<div class="wrapper">
+		<div class="main-header">
+			<div class="logo-header">
+				<a href="index.html" class="logo">ArtGallery</a>
+				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+					data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
+			</div>
+			<nav class="navbar navbar-header navbar-expand-lg">
+				<div class="container-fluid">
+
+					<form class="navbar-left navbar-form nav-search mr-md-3" action="">
+						<div class="input-group">
+							<input type="text" placeholder="Search ..." class="form-control">
+							<div class="input-group-append">
+								<span class="input-group-text">
+									<i class="la la-search search-icon"></i>
+								</span>
+							</div>
+						</div>
+					</form>
+					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+						<li class="nav-item dropdown">
+							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
+								aria-expanded="false"> <img src="assets/img/profile.jpg" alt="user-img" width="36"
+									class="img-circle"><span>Administrator</span></span> </a>
+							<ul class="dropdown-menu dropdown-user">
+								<li>
+									<div class="user-box">
+										<div class="u-img"><img src="assets/img/profile.jpg" alt="user"></div>
+										<div class="u-text">
+											<h4>Administrator</h4>
+											<p class="text-muted">admin@email.com</p><a href="./profile.html"
+												class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+										</div>
+									</div>
+								</li>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="../index.html"><i class="fa fa-power-off"></i> Logout</a>
+							</ul>
+							<!-- /.dropdown-user -->
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+		<div class="sidebar">
+			<div class="scrollbar-inner sidebar-wrapper">
+				<ul class="nav">
+					<li class="nav-item">
+						<a href="index.html">
+							<i class="la la-dashboard"></i>
+							<p>Marketplace</p>
+						</a>
+					</li>
+					<li class="nav-item active">
+						<a href="./custom-artwork.html">
+							<i class="la la-paint-brush"></i>
+							<p>Custom Requests</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="./purchases.html">
+							<i class="la la-credit-card"></i>
+							<p>Purchase History</p>
+						</a>
+					</li>
+					<hr class="my-1">
+					<li class="nav-item">
+						<a href="./upload-artwork.html">
+							<i class="la la-cloud-upload"></i>
+							<p>Upload Artwork</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="./manage-artwork.html">
+							<i class="la la-photo"></i>
+							<p>Manage Artworks</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="./custom-orders.html">
+							<i class="la la-tasks"></i>
+							<p>Custom Orders</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="./sales.html">
+							<i class="la la-money"></i>
+							<p>Sales History</p>
+						</a>
+					</li>
+					<hr class="my-1">
+					<li class="nav-item">
+						<a href="./user-management.html">
+							<i class="la la-users"></i>
+							<p>User Management</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="./artwork-review.html">
+							<i class="la la-check-circle"></i>
+							<p>Artwork Review</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="./transactions.html">
+							<i class="la la-files-o"></i>
+							<p>Transaction Overview</p>
+						</a>
+					</li>
+					<li class="nav-item update-pro">
+						<button class="btn-sm btn-rounded btn-outline-secondary">
+							<p>Upgrade to <b>Artist</b></p>
+						</button>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="main-panel">
+			<div class="content">
+				<div class="container-fluid">
+					<h4 class="page-title">Custom Artwork Request</h4>
+					<div class="row row-card-no-pd">
+						<div class="col-md-8">
+							<div class="container">
+
+								<h5>Request Logs</h5>
+								<div class="table-responsive">
+									<table class="table table-bordered table-hover">
+										<thead class="thead-light">
+											<tr>
+												<th>#</th>
+												<th>Request Title</th>
+												<th>Offered Price (₦)</th>
+												<th>Artist</th>
+												<th>Status</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>Portrait of a landscape scene</td>
+												<td>₦50,000</td>
+												<td>@ArtByJohn</td>
+												<td><span class="badge badge-warning">Work in Progress</span></td>
+											</tr>
+											<tr>
+												<td>2</td>
+												<td>Custom digital artwork</td>
+												<td>₦35,000</td>
+												<td>-</td>
+												<td><span class="badge badge-secondary">Submitted</span></td>
+											</tr>
+											<tr>
+												<td>3</td>
+												<td>Hand-drawn portrait</td>
+												<td>₦40,000</td>
+												<td>@CreativePainter</td>
+												<td><span class="badge badge-success">Accepted</span></td>
+											</tr>
+											<tr>
+												<td>4</td>
+												<td>Abstract painting</td>
+												<td>₦60,000</td>
+												<td>@ModernArt</td>
+												<td><span class="badge badge-danger">Rejected</span></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div class="card shadow-lg">
+								<div class="card-body">
+									<h5 class="card-title text-center">Submit New Request</h5>
+									<p class="text-muted text-center small">
+										Submit your custom artwork request. Any artist can review
+										and respond to your request.
+									</p>
+
+									<form>
+										<div class="form-group">
+											<label for="requestTitle">Request Title</label>
+											<input type="number" id="requestTitle" class="form-control"
+												placeholder="Enter your request title">
+										</div>
+
+										<div class="form-group">
+											<label for="artworkSpecifications">Artwork Specifications</label>
+											<textarea id="artworkSpecifications" class="form-control" rows="3"
+												placeholder="Describe your custom artwork..."></textarea>
+										</div>
+
+										<div class="form-group">
+											<label for="offeredPrice">Offered Price (₦)</label>
+											<input type="number" id="offeredPrice" class="form-control"
+												placeholder="Enter your budget">
+										</div>
+
+										<div class="form-group">
+											<label for="sketchSample">Sketch Sample (Optional)</label>
+											<input type="file" id="sketchSample" class="form-control-file">
+										</div>
+
+										<button type="submit" class="btn btn-primary btn-rounded btn-block">Submit
+											Request</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+<script src="assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="assets/js/core/popper.min.js"></script>
+<script src="assets/js/core/bootstrap.min.js"></script>
+<script src="assets/js/plugin/chartist/chartist.min.js"></script>
+<script src="assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
+<script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+<script src="assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+<script src="assets/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
+<script src="assets/js/plugin/chart-circle/circles.min.js"></script>
+<script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<script src="assets/js/ready.min.js"></script>
+<!-- <script src="assets/js/demo.js"></script> -->
+
+</html>
