@@ -1,25 +1,11 @@
-<!-- <?php
-// PHP Script for rendering the Login page
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
-
-    // Validate login inputs (dummy logic for demonstration)
-    if ($email === 'user@example.com' && $password === 'password123') {
-        echo "<script>alert('Login successful! Redirecting...');</script>";
-        // Redirect or handle login logic
-    } else {
-        echo "<script>alert('Invalid credentials! Please try again.');</script>";
-    }
-}
-?> -->
+<?php require './api/auth.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Login Page</title>
+    <title>Login as a Buyer, Artisan or Admin</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
         name='viewport' />
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -33,8 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="card shadow-lg" style="width: 22rem;">
             <div class="card-body">
-                <h4 class="card-titles text-center mb-4">Login</h4>
-                <form method="POST" action="./index.html">
+                <h4 class="card-titles text-center">Login</h4>
+                <p class="text-center text-muted mb-4">Please login to your account.</p>
+                <form method="POST" action="./login.php">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email Address</label>
                         <input type="email" class="form-control" name="email" placeholder="Enter your email address">
@@ -43,12 +30,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" name="password" placeholder="Enter your password">
                     </div>
+                    <?php
+                        if (isset($_SESSION["msg"])) {
+                            ?>
+                            <div class="alert alert-info" role="alert" id="message"><?php echo $_SESSION["msg"]; ?></div>
+                            <?php
+                        }
+                        unset($_SESSION["msg"]);
+                    ?>
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-rounded btn-primary">Login</button>
+                        <button type="submit" class="btn btn-rounded btn-primary" name="LoginBtn">Login</button>
                     </div>
                 </form>
                 <div class="text-center mt-2">
-                    <p class="mb-0">New to <b>ArtGallery</b>? <a href="./register.html">Create an account</a></p>
+                    <p class="mb-0">New to <b>ArtGallery</b>? <a href="./register.php">Create an account</a></p>
                 </div>
             </div>
         </div>

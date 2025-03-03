@@ -1,26 +1,11 @@
-<!-- <?php
-// PHP Script for rendering the Login page
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
-
-    // Validate login inputs (dummy logic for demonstration)
-    if ($email === 'user@example.com' && $password === 'password123') {
-        echo "<script>alert('Login successful! Redirecting...');</script>";
-        // Redirect or handle login logic
-        // header('Location: ./dashboard.php');
-    } else {
-        echo "<script>alert('Invalid credentials! Please try again.');</script>";
-    }
-}
-?> -->
+<?php require './api/auth.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Login Page</title>
+    <title>Register as a Buyer or Artisan</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
         name='viewport' />
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -35,36 +20,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
             <div class="card shadow-lg" style="width: 22rem;">
                 <div class="card-body py-4">
-                    <h4 class="card-titles text-center mb-4">Register</h4>
+                    <h4 class="card-titles text-center">Register</h4>
+                    <p class="text-center text-muted">Register as a Buyer or Artisan</p>
                     <div class="text-center text-muted pb-3">
                     </div>
-                    <form method="POST" action="./index.html">
+                    <form method="POST" action="./register.php">
                         <div class="mb-3">
                             <label for="name" class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Enter your full name" required>
+                            <input type="text" class="form-control" name="name" placeholder="Enter your full name"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address</label>
-                            <input type="email" class="form-control" id="email" name="email"
-                                placeholder="Enter your email" required>
+                            <input type="email" class="form-control" name="email" placeholder="Enter your email"
+                                required>
                         </div>
                         <div class="mb-3">
-                            <label for="phone_number" class="form-label">Phone Number</label>
-                            <input type="text" class="form-control" id="phone_number" name="phone_number"
-                                placeholder="Enter your phone number" required>
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" name="phone" placeholder="Enter your phone number" maxlength="11"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password"
+                            <input type="password" class="form-control" name="password"
                                 placeholder="Enter your password" required>
                         </div>
+                        <?php
+                            if (isset($_SESSION["msg"])) {
+                            ?>
+                            <div class="alert alert-info" role="alert" id="message"><?php echo $_SESSION["msg"]; ?></div>
+                            <?php
+                            }
+                            unset($_SESSION["msg"]);
+                        ?>
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-rounded btn-primary">Register</button>
+                            <a href="../index.html" class="btn btn-rounded btn-secondary">Home</a>
+                            <button type="submit" class="btn btn-rounded btn-primary"
+                                name="RegisterBtn">Register</button>
                         </div>
                     </form>
                     <div class="mt-2">
-                        <p class="mb-0">Already have an account? <a href="./login.html">Login</a></p>
+                        <p class="mb-0">Already have an account? <a href="./login.php">Login</a></p>
                     </div>
                 </div>
             </div>
@@ -84,5 +80,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
 <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 <script src="assets/js/ready.min.js"></script>
-
 </html>
