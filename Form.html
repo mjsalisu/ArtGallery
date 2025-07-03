@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+</head>
+
+<body>
+    <form accept="" method="">
+
+        <fieldset>
+            <legend>Your Details:</legend>
+
+            <p>
+                <label for="name"> Name:</label>
+                <input type="text" name="name" size="" maxlength="">
+            </p>
+
+            <p>
+                <label for="email"> Email:</label>
+                <input type="email" name="email" size="" maxlength="">
+            </p>
+        </fieldset>
+
+        <fieldset>
+            <legend>Your Review:</legend>
+            <p>
+                <input type="checkbox" name="news_letter" value="Subscribed" size="" maxlength="" checked>
+                <label for="news_letter"> Subscribe to the News Letter</label>
+            </p>
+
+            <p>
+                <label for="email_format">Format of the Email:</label> <br>
+                <input type="radio" name="email_format" value="HTML"> HTML <br>
+                <input type="radio" name="email_format" value="Plain Text"> Plain Text
+            </p>
+
+            <p>
+                <label for="sub_type"> Type of Subscribe you want: <br></label>
+                <select name="sub_type">
+                    <option>Please Select...</option>
+                    <option value="Free">Standard - Free</option>
+                    <option value="Premium">Premium</option>
+                </select>
+            </p>
+
+            <p>
+                <label for="comment">Comments to the Editor:</label> <br>
+                <textarea cols="" rows="5" name="comment"></textarea>
+            </p>
+
+            <input type="submit" name="submit">
+        </fieldset>
+    </form>
+</body>
+
+</html>
