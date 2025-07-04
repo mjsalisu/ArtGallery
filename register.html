@@ -23,22 +23,24 @@
 
             <form id="registerForm">
                 <div class="mb-3">
-                    <label for="name" class="form-label">Full Name</label>
-                    <input type="text" class="form-control" name="name" required placeholder="Your full name">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" name="name" required placeholder="Your full name"
+                        autocomplete="name">
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email Address</label>
-                    <input type="email" class="form-control" name="email" required placeholder="you@example.com">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-control" name="email" required placeholder="Your email address"
+                        autocomplete="email">
                 </div>
                 <div class="mb-3">
-                    <label for="phone" class="form-label">Phone Number</label>
+                    <label class="form-label">Phone Number</label>
                     <input type="text" class="form-control" name="phone" maxlength="11" required
-                        placeholder="08012345678">
+                        placeholder="Your phone number" autocomplete="tel">
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" name="password" required
-                        placeholder="Create a password">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" required placeholder="Choose a password"
+                        autocomplete="new-password">
                 </div>
                 <div class="d-grid">
                     <button type="submit" class="btn btn-primary" id="registerBtn">Register</button>
