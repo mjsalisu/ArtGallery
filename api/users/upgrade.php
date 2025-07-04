@@ -12,7 +12,7 @@ $sql = "UPDATE users SET role = 'Artist', updated_at = CURRENT_TIMESTAMP WHERE a
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$_SESSION['user_id']]);
 
-$_SESSION['user_role'] = 'Artist';  // Update session role too
+$_SESSION['user_role'] = 'Artist';
 
 echo json_encode(["message" => "You are now an Artist"]);
 ?>
