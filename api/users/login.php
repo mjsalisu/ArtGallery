@@ -22,6 +22,6 @@ if ($user && password_verify($data['password'], $user['password'])) {
     echo json_encode(["message" => "Login successful"]);
 } else {
     http_response_code(401);
-    echo json_encode(["error" => "Invalid credentials"]);
+    echo json_encode(["error" => "Invalid email or password, please try again."]);
 }
 ?>

@@ -13,61 +13,79 @@
 
 <body class="bg-light">
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-        <div class="card shadow-lg" style="width: 22rem;">
-            <div class="card-body">
-                <h4 class="text-center">Login</h4>
-                <p class="text-center text-muted mb-4">Sign in to your account</p>
-                <form id="loginForm">
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email Address</label>
-                        <input type="email" class="form-control" name="email" required placeholder="Enter your email">
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" required
-                            placeholder="Enter your password">
-                    </div>
-                    <div id="message" class="text-center text-danger mb-3"></div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary" id="loginBtn">Login</button>
-                    </div>
-                </form>
-                <div class="text-center mt-2">
-                    <p>New to <strong>ArtGallery</strong>? <a href="register.html">Create an account</a></p>
+        <div class="card shadow-lg p-4" style="width: 24rem;">
+            <h4 class="text-center mb-3">Login</h4>
+            <p class="text-center text-muted">Sign in to your account</p>
+
+            <div id="message" class="alert d-none" role="alert"></div>
+
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-control" name="email" required placeholder="Enter your email"
+                        autocomplete="email">
                 </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" required placeholder="Enter password"
+                        autocomplete="current-password">
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary" id="loginBtn">Login</button>
+                    <a href="index.html" class="btn btn-secondary mt-2">Home</a>
+                </div>
+            </form>
+
+            <div class="text-center mt-3">
+                <p>New to <strong>ArtGallery</strong>? <a href="register.html">Create an account</a></p>
             </div>
         </div>
     </div>
 
-    <!-- Scripts -->
     <script>
-        document.getElementById("loginForm").addEventListener("submit", function (e) {
+        const form = document.getElementById("loginForm");
+        const btn = document.getElementById("loginBtn");
+        const msgBox = document.getElementById("message");
+
+        form.addEventListener("submit", async function (e) {
             e.preventDefault();
-            const loginBtn = document.getElementById("loginBtn");
-            loginBtn.disabled = true;
-            loginBtn.textContent = "Logging in...";
+            msgBox.classList.add("d-none");
+            btn.disabled = true;
+            btn.textContent = "Logging in...";
 
-            const formData = new FormData(this);
-            fetch("api/users/login.php", {
-                method: "POST",
-                body: formData
-            })
-                .then(res => res.json())
-                .then(data => {
-                    loginBtn.disabled = false;
-                    loginBtn.textContent = "Login";
+            const formData = new FormData(form);
+            const payload = {};
+            formData.forEach((value, key) => payload[key] = value);
 
-                    if (data.status === "success") {
-                        window.location.href = "dashboard.html";
-                    } else {
-                        document.getElementById("message").textContent = data.message || "Login failed";
-                    }
-                })
-                .catch(() => {
-                    loginBtn.disabled = false;
-                    loginBtn.textContent = "Login";
-                    document.getElementById("message").textContent = "An error occurred. Please try again.";
+            try {
+                const res = await fetch("api/users/login.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
                 });
+
+                const data = await res.json();
+                btn.disabled = false;
+                btn.textContent = "Login";
+
+                msgBox.classList.remove("d-none");
+                msgBox.className = "alert " + (data.message ? "alert-success" : "alert-danger");
+                msgBox.textContent = data.message || data.error || "Something went wrong.";
+
+                if (data.message) {
+                    setTimeout(() => {
+                        window.location.href = "dashboard.html";
+                    }, 2000);
+                }
+
+            } catch (err) {
+                console.error(err);
+                btn.disabled = false;
+                btn.textContent = "Register";
+                msgBox.className = "alert alert-danger";
+                msgBox.textContent = "An error occurred. Please try again.";
+                msgBox.classList.remove("d-none");
+            }
         });
     </script>
 </body>
