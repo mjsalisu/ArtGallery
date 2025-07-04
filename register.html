@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Register as a Buyer or Artisan</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+        name='viewport' />
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900">
+    <link rel="stylesheet" href="assets/css/ready.css">
+    <link rel="stylesheet" href="assets/css/demo.css">
+</head>
+
+<body class="bg-light">
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="card shadow-lg p-4" style="width: 24rem;">
+            <h4 class="card-title text-center">Register</h4>
+            <p class="text-center text-muted">Register as a Buyer or Artisan</p>
+
+            <!-- Message Display -->
+            <div id="message" class="alert d-none" role="alert"></div>
+
+            <form id="registerForm">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" name="name" required placeholder="Your full name">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" name="email" required placeholder="you@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="text" class="form-control" name="phone" maxlength="11" required
+                        placeholder="08012345678">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" required
+                        placeholder="Create a password">
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary" id="registerBtn">Register</button>
+                    <a href="index.html" class="btn btn-secondary mt-2">Home</a>
+                </div>
+            </form>
+
+            <div class="text-center mt-3">
+                <p>Already have an account? <a href="login.html">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById("registerForm");
+        const btn = document.getElementById("registerBtn");
+        const msgBox = document.getElementById("message");
+
+        form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+            msgBox.classList.add("d-none");
+            btn.disabled = true;
+            btn.textContent = "Registering...";
+
+            const formData = new FormData(form);
+            const payload = {};
+            formData.forEach((value, key) => {
+                payload[key] = value;
+            });
+            payload.role = "Buyer";
+
+            try {
+                const response = await fetch("api/users/create.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                btn.disabled = false;
+                btn.textContent = "Register";
+
+                msgBox.classList.remove("d-none");
+                msgBox.className = "alert " + (data.message ? "alert-success" : "alert-danger");
+                msgBox.textContent = data.message || data.error || "Something went wrong.";
+
+                if (data.message) {
+                    setTimeout(() => {
+                        window.location.href = "login.html";
+                    }, 2000);
+                }
+
+            } catch (err) {
+                console.error(err);
+                btn.disabled = false;
+                btn.textContent = "Register";
+                msgBox.className = "alert alert-danger";
+                msgBox.textContent = "Something went wrong.";
+                msgBox.classList.remove("d-none");
+            }
+        });
+    </script>
+</body>
+
+</html>
