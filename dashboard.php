@@ -1,15 +1,10 @@
 <?php
-require 'api/session.php';
+require './api/auth.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.html");
     exit;
 }
-
-$user_id = $_SESSION["user_id"];
-$user_name = $_SESSION["user_name"];
-$user_role = $_SESSION["user_role"];
-
 ?>
 
 <!DOCTYPE html>
@@ -89,7 +84,6 @@ $user_role = $_SESSION["user_role"];
         </div>
     </div>
 
-    <!-- Scripts -->
     <?php include('components/scripts.html'); ?>
 </body>
 

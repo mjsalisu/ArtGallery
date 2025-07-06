@@ -12,14 +12,14 @@
 			</li>
 
 			<li class="nav-item">
-				<a href="./custom-artwork.html">
+				<a href="my_requests.php">
 					<i class="la la-paint-brush"></i>
-					<p>Post Custom Artwork</p>
+					<p>Custom Artwork</p>
 				</a>
 			</li>
 
 			<li class="nav-item">
-				<a href="./purchases.html">
+				<a href="./purchases.php">
 					<i class="la la-credit-card"></i>
 					<p>Purchases</p>
 				</a>
@@ -28,21 +28,21 @@
 			<hr class="my-1">
 
 			<li class="nav-item">
-				<a href="./artworks.html">
+				<a href="./my_artworks.php">
 					<i class="la la-photo"></i>
 					<p>My Artworks</p>
 				</a>
 			</li>
 
 			<li class="nav-item">
-				<a href="./custom-orders.html">
+				<a href="browse_requests.php">
 					<i class="la la-tasks"></i>
 					<p>Claim a Request</p>
 				</a>
 			</li>
 
 			<li class="nav-item">
-				<a href="./sales.html">
+				<a href="./sales.php">
 					<i class="la la-money"></i>
 					<p>My Sales</p>
 				</a>
@@ -51,21 +51,21 @@
 			<hr class="my-1">
 
 			<li class="nav-item">
-				<a href="./users.html">
+				<a href="./users.php">
 					<i class="la la-users"></i>
 					<p>Manage Users</p>
 				</a>
 			</li>
 
 			<li class="nav-item">
-				<a href="./manage-artworks.html">
+				<a href="./artworks.php">
 					<i class="la la-check-circle"></i>
 					<p>Manage Artworks</p>
 				</a>
 			</li>
 
 			<li class="nav-item">
-				<a href="./transactions.html">
+				<a href="./transactions.php">
 					<i class="la la-files-o"></i>
 					<p>Transactions</p>
 				</a>
