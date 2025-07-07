@@ -33,7 +33,7 @@ if ($type === 'physical') {
 }
 
 // Handle image upload
-$upload_dir = '../../uploads/';
+$upload_dir = '../../uploads/artworks/';
 if (!is_dir($upload_dir)) {
     mkdir($upload_dir, 0777, true);
 }

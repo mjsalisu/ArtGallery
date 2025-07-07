@@ -38,7 +38,7 @@ if (!isset($_SESSION['user_id'])) {
                     </div>
                     <!-- Start -->
                     <div class="row justify-content-center">
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <div class="card shadow-lg">
                                 <div class="card-body">
                                     <h5 class="card-title text-center">Upload New Artwork</h5>
@@ -47,10 +47,28 @@ if (!isset($_SESSION['user_id'])) {
 
                                     <div id="feedback" class="text-center my-3"></div>
 
-                                    <form id="requestForm" enctype="multipart/form-data">
-                                        <div class="form-group">
-                                            <label for="artworkTitle">Artwork Title</label>
-                                            <input type="text" id="artworkTitle" name="artwork_title" class="form-control" required>
+                                    <form id="artworkForm" enctype="multipart/form-data">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="artworkCategory">Category</label>
+                                                    <select id="artworkCategory" name="category" class="form-control" required>
+                                                        <option value="">-- Select Category --</option>
+                                                        <option value="painting">Painting</option>
+                                                        <option value="sculpture">Sculpture</option>
+                                                        <option value="digital_art">Digital Art</option>
+                                                        <option value="photography">Photography</option>
+                                                        <option value="mixed_media">Mixed Media</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="artworkTitle">Artwork Title</label>
+                                                    <input type="text" id="artworkTitle" name="title" class="form-control" required>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="form-group">
@@ -58,18 +76,44 @@ if (!isset($_SESSION['user_id'])) {
                                             <textarea id="artworkDescription" name="description" class="form-control" rows="3" required></textarea>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label for="price">Price (₦)</label>
-                                            <input type="number" id="price" name="price" class="form-control" required>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="artworkType">Type</label>
+                                                    <select id="artworkType" name="type" class="form-control" required onchange="toggleQuantityField()">
+                                                        <option value="">-- Select Type --</option>
+                                                        <option value="digital">Digital</option>
+                                                        <option value="physical">Physical</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group" id="quantityGroup" style="display: none;">
+                                                    <label for="quantity">Quantity</label>
+                                                    <input type="number" id="quantity" name="quantity" class="form-control" min="1">
+                                                </div>
+                                            </div>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label for="uploadArtwork">Upload Artwork</label>
-                                            <input type="file" id="uploadArtwork" name="uploadArtwork" accept="image/*" class="form-control-file">
-                                            <small class="form-text text-muted">Upload a sketch or reference image if available.</small>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="price">Price (₦)</label>
+                                                    <input type="number" id="price" name="price" class="form-control" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="uploadArtwork">Upload Artwork</label>
+                                                    <input type="file" id="uploadArtwork" name="photo" accept="image/*" class="form-control-file">
+                                                    <small class="form-text text-muted">Upload the main artwork image.</small>
+                                                </div>
+                                            </div>
                                         </div>
 
-                                        <button type="submit" id="submitBtn" class="btn btn-primary btn-block btn-rounded mb-3">Submit Request</button>
+                                        <button type="submit" id="submitBtn" class="btn btn-primary btn-block btn-rounded mb-3">Submit Artwork</button>
                                     </form>
                                 </div>
                             </div>
@@ -84,7 +128,15 @@ if (!isset($_SESSION['user_id'])) {
 
     <?php include('components/scripts.html'); ?>
     <script>
-        const form = document.getElementById("requestForm");
+        function toggleQuantityField() {
+            const type = document.getElementById("artworkType").value;
+            const quantityGroup = document.getElementById("quantityGroup");
+            quantityGroup.style.display = type === "physical" ? "block" : "none";
+        }
+    </script>
+
+    <script>
+        const form = document.getElementById("artworkForm");
         const btn = document.getElementById("submitBtn");
         const msgBox = document.getElementById("feedback");
 
@@ -102,7 +154,7 @@ if (!isset($_SESSION['user_id'])) {
             });
 
             try {
-                const response = await fetch("api/custom_requests/create.php", {
+                const response = await fetch("api/artworks/create.php", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

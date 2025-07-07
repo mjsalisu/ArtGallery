@@ -20,7 +20,7 @@ $stmt = $pdo->prepare("
            a.name AS artist_name 
     FROM custom_requests r
     LEFT JOIN users u ON r.created_by = u.userID
-    LEFT JOIN users a ON r.artistID = a.artistID
+    LEFT JOIN users a ON r.artistID = a.userID
     WHERE r.requestID = ?
 ");
 $stmt->execute([$requestID]);

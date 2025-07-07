@@ -2,7 +2,12 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h5>Request Overview</h5>
         <?php if (empty($request['artistID'])): ?>
-            <a href="cancel_request.php?id=<?= $requestID ?>" class="btn btn-rounded btn-danger btn-sm" onclick="return confirm('Are you sure you want to cancel this request?');">Cancel Request</a>
+            <button 
+                class="btn btn-rounded btn-danger btn-sm" 
+                onclick="cancelRequest(<?= htmlspecialchars($requestID) ?>)">
+                Cancel Request
+            </button>
+
             <?php else: ?>
                 <?php if ($request['status'] == 1): ?>
                     <span class="btn btn-rounded btn-success btn-sm">Claimed</span>
@@ -11,6 +16,7 @@
                 <?php endif; ?>
             <?php endif; ?>
     </div>
+    <div id="cancelFeedback" class="mt-2 d-none alert"></div>
 
     <p><span class="text-muted">Note: You can't cancel a request once an artist has claimed it.</span></p>
 
@@ -79,3 +85,39 @@
         </div>
     </div>
 </div>
+
+
+<script>
+function cancelRequest(requestID) {
+    if (!confirm("Are you sure you want to cancel this request?")) return;
+
+    const feedback = document.getElementById("cancelFeedback");
+    feedback.classList.add("d-none");
+
+    fetch("cancel_request.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `requestID=${encodeURIComponent(requestID)}`
+    })
+    .then(res => res.json())
+    .then(data => {
+        feedback.classList.remove("d-none");
+        feedback.className = "alert " + (data.success ? "alert-success" : "alert-danger");
+        feedback.textContent = data.message || "Something went wrong.";
+
+        if (data.success) {
+            setTimeout(() => {
+                window.location.href = "my_requests.php"; // redirect if needed
+            }, 2000);
+        }
+    })
+    .catch(error => {
+        console.error("Cancellation error:", error);
+        feedback.className = "alert alert-danger";
+        feedback.textContent = "Failed to cancel the request.";
+        feedback.classList.remove("d-none");
+    });
+}
+</script>

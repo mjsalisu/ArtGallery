@@ -34,11 +34,45 @@ if (!isset($_SESSION['user_id'])) {
 
                     <div class="card">
                         <div class="card-body">
-                            <?php
-                            $headers = ['Title', 'Buyer', 'Artist', 'Amount (₦)', 'Status', 'Date'];
-                            $tableID = 'transactionsTable';
-                            include 'components/table.php';
-                            ?>
+                        <?php
+// Fetch transactions relevant to the logged-in user
+$stmt = $pdo->prepare("
+    SELECT t.*, a.title AS artwork_title, u.name AS buyer_name, ua.name AS artist_name
+    FROM transaction t
+    JOIN artworks a ON t.artworkID = a.artworkID
+    JOIN users u ON t.buyerID = u.userID
+    JOIN users ua ON t.artistID = ua.userID
+    WHERE t.buyerID = ? OR t.artistID = ?
+    ORDER BY t.created_at DESC
+");
+$stmt->execute([$user_id, $user_id]);
+$transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$headers = ['Artwork', 'Buyer', 'Artist', 'Amount (₦)', 'Status', 'Transaction Date'];
+$rowsHtml = '';
+
+foreach ($transactions as $tx) {
+    $rowsHtml .= '<tr>';
+    $rowsHtml .= '<td>' . htmlspecialchars($tx['artwork_title']) . '</td>';
+    $rowsHtml .= '<td>' . htmlspecialchars($tx['buyer_name']) . '</td>';
+    $rowsHtml .= '<td>' . htmlspecialchars($tx['artist_name']) . '</td>';
+    $rowsHtml .= '<td>₦' . number_format($tx['amount'], 2) . '</td>';
+
+    $statusBadge = match ((int)$tx['payment_status']) {
+        1 => '<span class="badge badge-success">Completed</span>',
+        0 => '<span class="badge badge-warning">Pending</span>',
+        2 => '<span class="badge badge-danger">Failed</span>',
+        default => '<span class="badge badge-light">Unknown</span>',
+    };
+    $rowsHtml .= '<td>' . $statusBadge . '</td>';
+
+    $rowsHtml .= '<td>' . date('d M Y', strtotime($tx['created_at'])) . '</td>';
+    $rowsHtml .= '</tr>';
+}
+
+include('components/table.php');
+?>
+
                         </div>
                     </div>
                 </div>
@@ -47,49 +81,6 @@ if (!isset($_SESSION['user_id'])) {
     </div>
 
     <?php include('components/scripts.html'); ?>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-        const tbody = document.getElementById("transactionRows");
-        const totalCols = document.querySelectorAll("#transactionsTable th").length;
-
-        // Initial loading row
-        tbody.innerHTML = `<tr><td colspan="${totalCols}" class="text-center text-muted">Loading...</td></tr>`;
-
-        try {
-            const res = await fetch("api/transactions/list.php");
-            const data = await res.json();
-
-            if (!Array.isArray(data) || data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="${totalCols}" class="text-center text-muted">No transactions found.</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = "";
-            data.forEach(tx => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${tx.artwork_title}</td>
-                    <td>${tx.buyer_name}</td>
-                    <td>${tx.artist_name}</td>
-                    <td>₦${Number(tx.amount).toLocaleString()}</td>
-                    <td>
-                        <span class="badge ${
-                            tx.payment_status === 'completed' ? 'badge-success' :
-                            tx.payment_status === 'pending' ? 'badge-warning' : 'badge-danger'
-                        }">${tx.payment_status}</span>
-                    </td>
-                    <td>${new Date(tx.created_at).toLocaleDateString()}</td>
-                `;
-                tbody.appendChild(row);
-            });
-
-        } catch (error) {
-            console.error("Fetch error:", error);
-            tbody.innerHTML = `<tr><td colspan="${totalCols}" class="text-center text-danger">Failed to load data.</td></tr>`;
-        }
-    });
-</script>
 
 </body>
 

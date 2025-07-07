@@ -3,7 +3,7 @@ require '../auth.php';
 require '../db.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../../login.html");
+    echo "<script>alert('You do not have permission to access this page.'); window.location.href='../../users.php';</script>";
     exit;
 }
 

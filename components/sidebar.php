@@ -19,9 +19,9 @@
 			</li>
 
 			<li class="nav-item">
-				<a href="./purchases.php">
+				<a href="./my_order_history.php">
 					<i class="la la-credit-card"></i>
-					<p>Purchases</p>
+					<p>Order History</p>
 				</a>
 			</li>
 
@@ -42,7 +42,7 @@
 			</li>
 
 			<li class="nav-item">
-				<a href="./sales.php">
+				<a href="./my_sales.php">
 					<i class="la la-money"></i>
 					<p>My Sales</p>
 				</a>

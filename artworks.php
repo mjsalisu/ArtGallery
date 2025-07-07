@@ -40,7 +40,46 @@ if (!isset($_SESSION['user_id'])) {
                     <!-- Start -->
                     <div class="card">
                         <div class="card-body">
-                        
+                        <?php
+                            // Fetch all artwork submissions with artist info
+                            $stmt = $pdo->prepare("
+                                SELECT a.*, u.name AS artist_name
+                                FROM artworks a
+                                JOIN users u ON a.artistID = u.userID
+                                ORDER BY a.created_at DESC
+                            ");
+                            $stmt->execute();
+                            $artworks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                            $headers = ['Artwork Title', 'Type', 'Artist', 'Price (₦)', 'Status', 'Actions'];
+                            $rowsHtml = '';
+
+                            foreach ($artworks as $art) {
+                                $rowsHtml .= '<tr>';
+                                $rowsHtml .= '<td>' . htmlspecialchars($art['title']) . '</td>';
+                                $rowsHtml .= '<td>' . ucfirst(htmlspecialchars($art['type'])) . '</td>';
+                                $rowsHtml .= '<td>' . htmlspecialchars($art['artist_name']) . '</td>';
+                                $rowsHtml .= '<td>₦' . number_format($art['price']) . '</td>';
+
+                                $statusLabel = match ((int)$art['status']) {
+                                    0 => '<span class="badge badge-warning">Pending</span>',
+                                    1 => '<span class="badge badge-success">Approved</span>',
+                                    2 => '<span class="badge badge-secondary">Inactive</span>',
+                                    3 => '<span class="badge badge-danger">Rejected</span>',
+                                    default => '<span class="badge badge-light">Unknown</span>',
+                                };
+                                $rowsHtml .= '<td>' . $statusLabel . '</td>';
+
+                                $rowsHtml .= '<td>
+                                    <a href="view_artwork.php?id=' . $art['artworkID'] . '" class="btn btn-sm btn-info">Preview</a>
+                                </td>';
+
+                                $rowsHtml .= '</tr>';
+                            }
+
+                            include('components/table.php');
+                        ?>
+
                         </div>
                     </div>
 
