@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$sql = "UPDATE users SET role = 'Artist', updated_at = CURRENT_TIMESTAMP WHERE artistID = ?";
+$sql = "UPDATE users SET role = 'Artist', updated_at = CURRENT_TIMESTAMP WHERE userID = ?";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$_SESSION['user_id']]);
 

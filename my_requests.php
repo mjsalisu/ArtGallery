@@ -45,7 +45,7 @@ if (!isset($_SESSION['user_id'])) {
                             $stmt = $pdo->prepare("
                                 SELECT r.*, u.name AS artist_name 
                                 FROM custom_requests r 
-                                LEFT JOIN users u ON r.artistID = u.artistID
+                                LEFT JOIN users u ON r.artistID = u.userID
                                 WHERE r.created_by = ?
                             ");
                             $stmt->execute([$user_id]);

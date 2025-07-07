@@ -10,13 +10,19 @@ if (!isset($data['email'], $data['password'])) {
     exit;
 }
 
-$sql = "SELECT artistID, name, role, password FROM users WHERE email = ?";
+$sql = "SELECT * FROM users WHERE email = ?";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$data['email']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+if ($user && $user['status'] == 0) {
+    http_response_code(403);
+    echo json_encode(["error" => "Your account has been deactivated. Please contact support."]);
+    exit;
+} 
+
 if ($user && password_verify($data['password'], $user['password'])) {
-    $_SESSION['user_id'] = $user['artistID'];
+    $_SESSION['user_id'] = $user['userID'];
     $_SESSION['user_name'] = $user['name'];
     $_SESSION['user_role'] = $user['role'];
     echo json_encode(["message" => "Login successful"]);

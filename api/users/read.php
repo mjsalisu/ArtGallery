@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $sql = "SELECT artistID, name, email, phone, role, address, biography, profile_photo, created_at 
-        FROM users WHERE artistID = ?";
+        FROM users WHERE userID = ?";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$_SESSION['user_id']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);

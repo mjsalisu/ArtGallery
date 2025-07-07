@@ -10,9 +10,7 @@ if (!isset($_GET['id'])) {
 $artistID = $_GET['id'];
 
 // Get artist profile
-$sql = "SELECT name, email, biography, address, created_at, profile_photo
-        FROM users
-        WHERE artistID = ? AND role = 'Artist'";
+$sql = "SELECT * FROM users WHERE userID = ? AND role = 'Artist'";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$artistID]);
 $artist = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -35,7 +33,7 @@ $stmt->execute([$artistID]);
 $artist['artwork_count'] = $stmt->fetchColumn();
 
 // Get total sales
-$sql = "SELECT COALESCE(SUM(amount), 0) FROM transaction WHERE artistID = ?";
+$sql = "SELECT COALESCE(SUM(amount), 0) FROM transaction WHERE userID = ?";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$artistID]);
 $artist['total_sales'] = "₦" . $stmt->fetchColumn();

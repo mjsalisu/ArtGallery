@@ -14,13 +14,13 @@ $summary = [];
 
 if ($role === 'Artist') {
     // Total sales
-    $sql = "SELECT COALESCE(SUM(amount), 0) AS total FROM transaction WHERE artistID = ?";
+    $sql = "SELECT COALESCE(SUM(amount), 0) AS total FROM transaction WHERE userID = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$userID]);
     $summary[] = ["title" => "Total Sales", "value" => "₦" . $stmt->fetchColumn(), "desc" => "Total amount earned from artwork sales"];
 
     // Number of unique buyers
-    $sql = "SELECT COUNT(DISTINCT buyerID) FROM transaction WHERE artistID = ?";
+    $sql = "SELECT COUNT(DISTINCT buyerID) FROM transaction WHERE userID = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$userID]);
     $summary[] = ["title" => "Number of Buyers", "value" => $stmt->fetchColumn(), "desc" => "Unique buyers who purchased your work"];
@@ -43,7 +43,7 @@ if ($role === 'Artist') {
     ];
 
     // Pending transactions
-    $sql = "SELECT COUNT(*) FROM transaction WHERE artistID = ? AND payment_status = 0";
+    $sql = "SELECT COUNT(*) FROM transaction WHERE userID = ? AND payment_status = 0";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$userID]);
     $summary[] = ["title" => "Pending Orders", "value" => $stmt->fetchColumn(), "desc" => "Transactions awaiting payment or processing"];

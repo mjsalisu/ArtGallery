@@ -43,7 +43,7 @@ if (empty($updates)) {
 }
 
 $params[] = $userID;
-$sql = "UPDATE users SET " . implode(', ', $updates) . ", updated_at = CURRENT_TIMESTAMP WHERE artistID = ?";
+$sql = "UPDATE users SET " . implode(', ', $updates) . ", updated_at = CURRENT_TIMESTAMP WHERE userID = ?";
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 

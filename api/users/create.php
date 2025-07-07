@@ -10,7 +10,7 @@ if (!isset($data['name'], $data['email'], $data['phone'], $data['password'])) {
 }
 
 try {
-    $checkSql = "SELECT artistID FROM users WHERE email = ? OR phone = ?";
+    $checkSql = "SELECT userID FROM users WHERE email = ? OR phone = ?";
     $checkStmt = $pdo->prepare($checkSql);
     $checkStmt->execute([$data['email'], $data['phone']]);
     if ($checkStmt->rowCount() > 0) {   

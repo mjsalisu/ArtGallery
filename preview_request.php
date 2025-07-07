@@ -19,7 +19,7 @@ $stmt = $pdo->prepare("
            u.name AS buyer_name, 
            a.name AS artist_name 
     FROM custom_requests r
-    LEFT JOIN users u ON r.created_by = u.artistID
+    LEFT JOIN users u ON r.created_by = u.userID
     LEFT JOIN users a ON r.artistID = a.artistID
     WHERE r.requestID = ?
 ");

@@ -22,36 +22,75 @@ if (!isset($_SESSION['user_id'])) {
 
 <body>
     <div class="wrapper">
-        <!-- Header -->
         <?php include('components/header.php'); ?>
-
-        <!-- Sidebar -->
         <?php include('components/sidebar.php'); ?>
 
-        <!-- Main Panel -->
         <div class="main-panel">
             <div class="content">
                 <div class="container-fluid">
                     <div class="d-flex justify-content-between align-items-center mb-1">
                         <h4 class="page-title">Transactions</h4>
-                        <!-- <a href="create_requests.php" class="btn btn-rounded btn-primary btn-sm">Submit New Request</a> -->
                     </div>
 
-                    <!-- Start -->
                     <div class="card">
                         <div class="card-body">
-                        
+                            <?php
+                            $headers = ['Title', 'Buyer', 'Artist', 'Amount (₦)', 'Status', 'Date'];
+                            $tableID = 'transactionsTable';
+                            include 'components/table.php';
+                            ?>
                         </div>
                     </div>
-
-                <!-- End -->
                 </div>
             </div>
         </div>
-        <!-- End of Main Panel -->
     </div>
 
     <?php include('components/scripts.html'); ?>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const tbody = document.getElementById("transactionRows");
+        const totalCols = document.querySelectorAll("#transactionsTable th").length;
+
+        // Initial loading row
+        tbody.innerHTML = `<tr><td colspan="${totalCols}" class="text-center text-muted">Loading...</td></tr>`;
+
+        try {
+            const res = await fetch("api/transactions/list.php");
+            const data = await res.json();
+
+            if (!Array.isArray(data) || data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="${totalCols}" class="text-center text-muted">No transactions found.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = "";
+            data.forEach(tx => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${tx.artwork_title}</td>
+                    <td>${tx.buyer_name}</td>
+                    <td>${tx.artist_name}</td>
+                    <td>₦${Number(tx.amount).toLocaleString()}</td>
+                    <td>
+                        <span class="badge ${
+                            tx.payment_status === 'completed' ? 'badge-success' :
+                            tx.payment_status === 'pending' ? 'badge-warning' : 'badge-danger'
+                        }">${tx.payment_status}</span>
+                    </td>
+                    <td>${new Date(tx.created_at).toLocaleDateString()}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+        } catch (error) {
+            console.error("Fetch error:", error);
+            tbody.innerHTML = `<tr><td colspan="${totalCols}" class="text-center text-danger">Failed to load data.</td></tr>`;
+        }
+    });
+</script>
+
 </body>
 
 </html>

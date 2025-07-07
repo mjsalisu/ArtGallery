@@ -15,7 +15,7 @@ $user_name = $_SESSION['user_name'];
 $user_role = $_SESSION['user_role'];
 
 // Fetch full user info
-$stmt = $pdo->prepare("SELECT * FROM users WHERE artistID = ?");
+$stmt = $pdo->prepare("SELECT * FROM users WHERE userID = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 

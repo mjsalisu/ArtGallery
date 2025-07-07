@@ -29,7 +29,7 @@ if (!move_uploaded_file($_FILES['photo']['tmp_name'], $filepath)) {
 }
 
 // Save to DB
-$sql = "UPDATE users SET profile_photo = ? WHERE artistID = ?";
+$sql = "UPDATE users SET profile_photo = ? WHERE userID = ?";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$filename, $_SESSION['user_id']]);
 
