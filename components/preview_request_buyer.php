@@ -1,24 +1,31 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h5>Request Overview</h5>
-        <?php if (empty($request['artistID'])): ?>
+
+        <?php if ((int)$request['status'] === -1): ?>
+            <span class="btn btn-rounded btn-danger btn-sm disabled">Cancelled</span>
+
+        <?php elseif (empty($request['artistID'])): ?>
             <button 
                 class="btn btn-rounded btn-danger btn-sm" 
                 onclick="cancelRequest(<?= htmlspecialchars($requestID) ?>)">
                 Cancel Request
             </button>
 
-            <?php else: ?>
-                <?php if ($request['status'] == 1): ?>
-                    <span class="btn btn-rounded btn-success btn-sm">Claimed</span>
-                <?php elseif ($request['status'] == 2): ?>
-                    <span class="btn btn-rounded btn-secondary btn-sm">Completed</span>
-                <?php endif; ?>
+        <?php else: ?>
+            <?php if ((int)$request['status'] === 1): ?>
+                <span class="btn btn-rounded btn-success btn-sm">In Progress</span>
+            <?php elseif ((int)$request['status'] === 2): ?>
+                <span class="btn btn-rounded btn-secondary btn-sm">Completed</span>
             <?php endif; ?>
+        <?php endif; ?>
     </div>
+
     <div id="cancelFeedback" class="mt-2 d-none alert"></div>
 
-    <p><span class="text-muted">Note: You can't cancel a request once an artist has claimed it.</span></p>
+    <?php if (empty($request['artistID']) && (int)$request['status'] !== 3): ?>
+        <p><span class="text-muted">Note: You can't cancel a request once an artist has claimed it.</span></p>
+    <?php endif; ?>
 
     <div class="row row-card-no-pd">
         <!-- Request Details -->
@@ -49,7 +56,12 @@
 
                     <p><strong>Status:</strong><br>
                         <span class="text-primary">
-                            <?= $request['status'] == 1 ? 'In Progress' : ($request['status'] == 2 ? 'Completed' : 'Pending') ?>
+                            <?= match ((int)$request['status']) {
+                                1 => 'In Progress',
+                                2 => 'Completed',
+                                -1 => 'Cancelled',
+                                default => 'Pending'
+                            } ?>
                         </span>
                     </p>
 
@@ -68,15 +80,6 @@
                             <strong>Submitted Artwork:</strong><br>
                             <img src="uploads/sketches/<?= htmlspecialchars($request['uploaded_artwork']) ?>" class="card-img">
                         </div>
-
-                        <!-- <div class="form-group">
-                            <label class="fw-bold">Feedback</label>
-                            <textarea class="form-control" rows="3" placeholder="Your feedback or comments..."></textarea>
-                        </div>
-                        <div class="pt-1">
-                            <button type="submit" class="btn btn-outline-success btn-rounded btn-sm">Approve Submission</button>
-                            <button class="btn btn-outline-danger btn-rounded btn-sm">Reject Submission</button>
-                        </div> -->
                     <?php else: ?>
                         <p class="text-muted">No submission yet.</p>
                     <?php endif; ?>
@@ -86,7 +89,6 @@
     </div>
 </div>
 
-
 <script>
 function cancelRequest(requestID) {
     if (!confirm("Are you sure you want to cancel this request?")) return;
@@ -94,7 +96,7 @@ function cancelRequest(requestID) {
     const feedback = document.getElementById("cancelFeedback");
     feedback.classList.add("d-none");
 
-    fetch("cancel_request.php", {
+    fetch("api/custom_requests/cancel_request.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"

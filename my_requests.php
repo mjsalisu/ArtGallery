@@ -60,8 +60,8 @@ if (!isset($_SESSION['user_id'])) {
                                 $rowsHtml .= '<td>₦' . number_format($request['offered_price']) . '</td>';
 
                                 if ($request['artistID']) {
-                                    $rowsHtml .= '<td>' . htmlspecialchars($request['artist_name'] ?? '') . '<br>
-                                            <a href="artist-profile.php?id=' . $request['artistID'] . '" class="btn btn-xs btn-link">View Profile</a>
+                                    $rowsHtml .= '<td>'.'<br>
+                                            <a href="artist-profile.php?id=' . $request['artistID'] . '" class="btn btn-link">@' . htmlspecialchars($request['artist_name'] ?? '') . '</a>
                                         </td>';
                                 } else {
                                     $rowsHtml .= '<td><span class="badge badge-secondary">Unclaimed</span></td>';

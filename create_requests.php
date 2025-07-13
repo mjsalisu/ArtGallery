@@ -45,10 +45,9 @@ if (!isset($_SESSION['user_id'])) {
                                     <p class="text-muted text-center small">
                                         Submit your custom artwork request. Artists can review and respond.
                                     </p>
+                                    <div id="message" class="alert d-none my-3"></div>
 
-                                    <div id="feedback" class="text-center my-3"></div>
-
-                                    <form id="requestForm" enctype="multipart/form-data">
+                                    <form action="api/custom_requests/create.php" method="POST" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label for="requestTitle">Request Title</label>
                                             <input type="text" id="requestTitle" name="request_title" class="form-control" required>
@@ -84,59 +83,24 @@ if (!isset($_SESSION['user_id'])) {
     </div>
 
     <?php include('components/scripts.html'); ?>
-    <script>
-        const form = document.getElementById("requestForm");
-        const btn = document.getElementById("submitBtn");
-        const msgBox = document.getElementById("feedback");
-
-        form.addEventListener("submit", async function (e) {
-            e.preventDefault();
-            msgBox.classList.add("d-none");
-            btn.disabled = true;
-            btn.textContent = "Submitting...";
-
-            const formData = new FormData(form);
-            const payload = {};
-
-            formData.forEach((value, key) => {
-                payload[key] = value;
-            });
-
-            try {
-                const response = await fetch("api/custom_requests/create.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                        
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                const data = await response.json();
-                btn.disabled = false;
-                btn.textContent = "Submit Request";
-
-                msgBox.classList.remove("d-none");
-                msgBox.className = "alert " + (data.message ? "alert-success" : "alert-danger");
-                msgBox.textContent = data.message || data.error || "Something went wrong.";
-
-                if (data.message) {
-                    form.reset();
-                    setTimeout(() => {
-                        window.location.href = "my_requests.php";
-                    }, 2500);
-                }
-
-            } catch (err) {
-                console.error(err);
-                btn.disabled = false;
-                btn.textContent = "Submit Request";
-                msgBox.className = "alert alert-danger";
-                msgBox.textContent = "Something went wrong.";
-                msgBox.classList.remove("d-none");
-            }
-        });
-    </script>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const params = new URLSearchParams(window.location.search);
+        const msgBox = document.getElementById("message");
+
+        if (params.has("success") || params.has("error")) {
+            const isSuccess = params.has("success");
+            const message = isSuccess ? params.get("success") : params.get("error");
+
+            msgBox.classList.remove("d-none");
+            msgBox.classList.add("alert", isSuccess ? "alert-success" : "alert-danger");
+            msgBox.textContent = decodeURIComponent(message);
+
+            // Optionally clear URL parameters after showing message
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    });
+</script>
 
 </html>

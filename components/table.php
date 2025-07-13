@@ -6,7 +6,7 @@
             <?php endforeach; ?>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="">
         <?= $rowsHtml ?>
         <?php if (empty($rowsHtml)): ?>
             <tr>
@@ -15,18 +15,3 @@
         <?php endif; ?>
     </tbody>
 </table>
-
-<!-- <div class="table-responsive">
-    <table id="<?= $tableID ?>" class="table table-bordered table-hover">
-        <thead class="thead-light">
-            <tr>
-                <?php foreach ($headers as $header): ?>
-                    <th><?= htmlspecialchars($header) ?></th>
-                <?php endforeach; ?>
-            </tr>
-        </thead>
-        <tbody id="<?= $tableID ?>_body">
-            <tr><td colspan="<?= count($headers) ?>" class="text-center text-muted">Loading...</td></tr>
-        </tbody>
-    </table>
-</div> -->
