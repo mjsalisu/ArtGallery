@@ -40,7 +40,7 @@
                     <?php if (!empty($request['sketch_sample'])): ?>
                         <div class="position-relative mb-3">
                             <strong>Sketch Sample:</strong><br>
-                            <img src="uploads/sketches/<?= htmlspecialchars($request['sketch_sample']) ?>" class="card-img">
+                            <img src="<?= htmlspecialchars($request['sketch_sample']) ?>" class="card-img">
                         </div>
                     <?php endif; ?>
                 </div>
@@ -52,7 +52,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Artist Submission</h5>
-                    <p class="card-text">Review the artist's submission and approve if satisfied.</p>
+                    <p class="card-text">Review the artist's submission and status below:</p>
 
                     <p><strong>Status:</strong><br>
                         <span class="text-primary">
@@ -78,7 +78,7 @@
                     <?php if (!empty($request['uploaded_artwork'])): ?>
                         <div class="position-relative mb-3">
                             <strong>Submitted Artwork:</strong><br>
-                            <img src="uploads/sketches/<?= htmlspecialchars($request['uploaded_artwork']) ?>" class="card-img">
+                            <img src="<?= htmlspecialchars($request['uploaded_artwork']) ?>" class="card-img">
                         </div>
                     <?php else: ?>
                         <p class="text-muted">No submission yet.</p>

@@ -40,48 +40,51 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="card">
                         <div class="card-body">
                         <?php
-                            // Fetch open custom requests for artist participation
-                            $stmt = $pdo->query("
-                                SELECT r.*, 
-                                    u.name AS buyer_name, 
-                                    a.name AS artist_name 
-                                FROM custom_requests r
-                                LEFT JOIN users u ON r.created_by = u.userID
-                                LEFT JOIN users a ON r.artistID = a.userID
-                                ORDER BY r.status ASC, r.created_at DESC
+                            // Fetch open custom requests for artist participation (excluding user's own)
+                            $stmt = $pdo->prepare("
+                            SELECT r.*, 
+                                u.name AS buyer_name, 
+                                a.name AS artist_name 
+                            FROM custom_requests r
+                            LEFT JOIN users u ON r.created_by = u.userID
+                            LEFT JOIN users a ON r.artistID = a.userID
+                            WHERE r.created_by != ? AND r.status != -1
+                            ORDER BY r.status ASC, r.created_at DESC
                             ");
-
+                            $stmt->execute([$user_id]);
                             $requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                             $headers = ['Title', 'Budget (₦)', 'Buyer', 'Status', 'Date', 'Actions'];
                             $rowsHtml = '';
 
                             foreach ($requests as $request) {
-                                $rowsHtml .= '<tr>';
-                                $rowsHtml .= '<td>' . htmlspecialchars($request['request_title']) . '</td>';
-                                $rowsHtml .= '<td>₦' . number_format($request['offered_price']) . '</td>';
-                                $rowsHtml .= '<td>' . htmlspecialchars($request['buyer_name'] ?? '-') . '</td>';
+                            $rowsHtml .= '<tr>';
+                            $rowsHtml .= '<td>' . htmlspecialchars($request['request_title']) . '</td>';
+                            $rowsHtml .= '<td>₦' . number_format($request['offered_price']) . '</td>';
+                            $rowsHtml .= '<td>' . htmlspecialchars($request['buyer_name'] ?? '-') . '</td>';
 
-                                $statusText = match ($request['status']) {
-                                    1 => '<span class="badge badge-warning">In Progress</span>',
-                                    2 => '<span class="badge badge-success">Completed</span>',
-                                    default => '<span class="badge badge-light">Open</span>',
-                                };
-                                $rowsHtml .= '<td>' . $statusText . '</td>';
+                            $statusText = match ((int)$request['status']) {
+                                1 => '<span class="badge badge-warning">In Progress</span>',
+                                2 => '<span class="badge badge-success">Completed</span>',
+                                default => '<span class="badge badge-light">Open</span>',
+                            };
+                            $rowsHtml .= '<td>' . $statusText . '</td>';
+                            $rowsHtml .= '<td>' . date('d M Y', strtotime($request['created_at'])) . '</td>';
 
-                                $rowsHtml .= '<td>' . date('d M Y', strtotime($request['created_at'])) . '</td>';
-
-                                if ($request['created_by'] == $user_id) {
-                                    $rowsHtml .= '<td><span class="badge badge-light">Not Eligible (Created)</span></td>';
-                                } elseif (!empty($request['artistID'])) {
-                                    $rowsHtml .= '<td><span class="badge badge-secondary">Already Taken</span></td>';
-                                } else {
-                                    $rowsHtml .= '<td><a href="preview_request.php?id=' . $request['requestID'] . '" class="btn btn-sm btn-primary">Participate</a></td>';
-                                }                                
-
-                                $rowsHtml .= '</tr>';
+                            // Determine actions
+                            if (is_null($request['artistID'])) {
+                                // Not claimed yet
+                                $rowsHtml .= '<td><a href="preview_request.php?id=' . $request['requestID'] . '" class="btn btn-sm btn-primary">Participate</a></td>';
+                            } elseif ($request['artistID'] == $user_id) {
+                                // Logged in artist has claimed it
+                                $rowsHtml .= '<td><a href="preview_request.php?id=' . $request['requestID'] . '" class="btn btn-sm btn-info">View Submission</a></td>';
+                            } else {
+                                // Claimed by someone else
+                                $rowsHtml .= '<td><span class="badge badge-secondary">Already Taken</span></td>';
                             }
 
+                            $rowsHtml .= '</tr>';
+                        }
                             include('components/table.php');
                         ?>
 

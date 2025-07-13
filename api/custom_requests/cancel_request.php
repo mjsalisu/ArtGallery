@@ -1,5 +1,5 @@
 <?php
-require '../session.php';
+require '../auth.php';
 require '../db.php';
 
 header("Content-Type: application/json");

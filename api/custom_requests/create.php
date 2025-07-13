@@ -33,7 +33,7 @@ if ($check->rowCount() > 0) {
 
 // Handle sketch upload
 if (isset($_FILES['sketch_sample']) && $_FILES['sketch_sample']['error'] === UPLOAD_ERR_OK) {
-    $uploadDir = '../uploads/sketches/';
+    $uploadDir = '../../uploads/sketches/';
     if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
 
     $ext = pathinfo($_FILES['sketch_sample']['name'], PATHINFO_EXTENSION);

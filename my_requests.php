@@ -43,10 +43,11 @@ if (!isset($_SESSION['user_id'])) {
                         <?php
                             // Fetch data with artist info
                             $stmt = $pdo->prepare("
-                                SELECT r.*, u.name AS artist_name 
-                                FROM custom_requests r 
-                                LEFT JOIN users u ON r.artistID = u.userID
-                                WHERE r.created_by = ?
+                            SELECT r.*, u.name AS artist_name 
+                            FROM custom_requests r 
+                            LEFT JOIN users u ON r.artistID = u.userID
+                            WHERE r.created_by = ?
+                            ORDER BY r.created_at DESC
                             ");
                             $stmt->execute([$user_id]);
                             $requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -55,28 +56,29 @@ if (!isset($_SESSION['user_id'])) {
                             $rowsHtml = '';
 
                             foreach ($requests as $request) {
-                                $rowsHtml .= '<tr>';
-                                $rowsHtml .= '<td>' . htmlspecialchars($request['request_title']) . '</td>';
-                                $rowsHtml .= '<td>₦' . number_format($request['offered_price']) . '</td>';
+                            $rowsHtml .= '<tr>';
+                            $rowsHtml .= '<td>' . htmlspecialchars($request['request_title']) . '</td>';
+                            $rowsHtml .= '<td>₦' . number_format($request['offered_price']) . '</td>';
 
-                                if ($request['artistID']) {
-                                    $rowsHtml .= '<td>'.'<br>
-                                            <a href="artist-profile.php?id=' . $request['artistID'] . '" class="btn btn-link">@' . htmlspecialchars($request['artist_name'] ?? '') . '</a>
-                                        </td>';
-                                } else {
-                                    $rowsHtml .= '<td><span class="badge badge-secondary">Unclaimed</span></td>';
-                                }
+                            if ($request['artistID']) {
+                                $rowsHtml .= '<td>
+                                    <a href="artist-profile.php?id=' . $request['artistID'] . '" class="btn btn-link">@' . htmlspecialchars($request['artist_name'] ?? '') . '</a>
+                                </td>';
+                            } else {
+                                $rowsHtml .= '<td><span class="badge badge-secondary">Unclaimed</span></td>';
+                            }
 
-                                $statusText = match ($request['status']) {
-                                    1 => '<span class="badge badge-warning">In Progress</span>',
-                                    2 => '<span class="badge badge-success">Completed</span>',
-                                    default => '<span class="badge badge-light">Pending</span>',
-                                };
-                                $rowsHtml .= '<td>' . $statusText . '</td>';
+                            $statusText = match ((int) $request['status']) {
+                                -1 => '<span class="badge badge-danger">Cancelled</span>',
+                                1 => '<span class="badge badge-warning">In Progress</span>',
+                                2 => '<span class="badge badge-success">Completed</span>',
+                                default => '<span class="badge badge-light">Pending</span>',
+                            };
+                            $rowsHtml .= '<td>' . $statusText . '</td>';
 
-                                $rowsHtml .= '<td>' . date('d M Y', strtotime($request['created_at'])) . '</td>';
-                                $rowsHtml .= '<td><a href="preview_request.php?id=' . $request['requestID'] . '" class="btn btn-sm btn-info">Preview</a></td>';
-                                $rowsHtml .= '</tr>';
+                            $rowsHtml .= '<td>' . date('d M Y', strtotime($request['created_at'])) . '</td>';
+                            $rowsHtml .= '<td><a href="preview_request.php?id=' . $request['requestID'] . '" class="btn btn-sm btn-info">Preview</a></td>';
+                            $rowsHtml .= '</tr>';
                             }
 
                             include('components/table.php');
