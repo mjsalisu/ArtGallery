@@ -45,9 +45,9 @@ if (!isset($_SESSION['user_id'])) {
                                     <p class="text-muted text-center">
                                         Upload your completed artwork for review and approval.</p>
 
-                                    <div id="feedback" class="text-center my-3"></div>
+                                    <div id="message" class="alert d-none my-3"></div>
 
-                                    <form id="artworkForm" enctype="multipart/form-data">
+                                    <form action="api/artworks/create.php" method="POST" enctype="multipart/form-data">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -73,7 +73,7 @@ if (!isset($_SESSION['user_id'])) {
 
                                         <div class="form-group">
                                             <label for="artworkDescription">Description</label>
-                                            <textarea id="artworkDescription" name="description" class="form-control" rows="3" required></textarea>
+                                            <textarea id="artworkDescription" name="description" class="form-control" rows="2" required></textarea>
                                         </div>
 
                                         <div class="row">
@@ -107,7 +107,7 @@ if (!isset($_SESSION['user_id'])) {
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="uploadArtwork">Upload Artwork</label>
-                                                    <input type="file" id="uploadArtwork" name="photo" accept="image/*" class="form-control-file">
+                                                    <input type="file" id="uploadArtwork" name="photo" accept="image/*" class="form-control-file" required>
                                                     <small class="form-text text-muted">Upload the main artwork image.</small>
                                                 </div>
                                             </div>
@@ -133,61 +133,25 @@ if (!isset($_SESSION['user_id'])) {
             const quantityGroup = document.getElementById("quantityGroup");
             quantityGroup.style.display = type === "physical" ? "block" : "none";
         }
-    </script>
+   
+        document.addEventListener("DOMContentLoaded", function () {
+            const params = new URLSearchParams(window.location.search);
+            const msgBox = document.getElementById("message");
 
-    <script>
-        const form = document.getElementById("artworkForm");
-        const btn = document.getElementById("submitBtn");
-        const msgBox = document.getElementById("feedback");
-
-        form.addEventListener("submit", async function (e) {
-            e.preventDefault();
-            msgBox.classList.add("d-none");
-            btn.disabled = true;
-            btn.textContent = "Submitting...";
-
-            const formData = new FormData(form);
-            const payload = {};
-
-            formData.forEach((value, key) => {
-                payload[key] = value;
-            });
-
-            try {
-                const response = await fetch("api/artworks/create.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                        
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                const data = await response.json();
-                btn.disabled = false;
-                btn.textContent = "Submit Request";
+            if (params.has("success") || params.has("error")) {
+                const isSuccess = params.has("success");
+                const message = isSuccess ? params.get("success") : params.get("error");
 
                 msgBox.classList.remove("d-none");
-                msgBox.className = "alert " + (data.message ? "alert-success" : "alert-danger");
-                msgBox.textContent = data.message || data.error || "Something went wrong.";
+                msgBox.classList.add("alert", isSuccess ? "alert-success" : "alert-danger");
+                msgBox.textContent = decodeURIComponent(message);
 
-                if (data.message) {
-                    form.reset();
-                    setTimeout(() => {
-                        window.location.href = "my_requests.php";
-                    }, 2500);
-                }
-
-            } catch (err) {
-                console.error(err);
-                btn.disabled = false;
-                btn.textContent = "Submit Request";
-                msgBox.className = "alert alert-danger";
-                msgBox.textContent = "Something went wrong.";
-                msgBox.classList.remove("d-none");
+                // Optionally clear URL parameters after showing message
+                window.history.replaceState({}, document.title, window.location.pathname);
             }
         });
     </script>
+
 </body>
 
 </html>

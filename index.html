@@ -25,10 +25,12 @@
             </nav>
         </header>
 
+        <div class="login-reminder" style="background: #fff3cd; color: #856404; text-align: center;">
+            Please <a href="./login.html" style="font-weight: bold;">log in</a> to view full artwork details and
+            make a purchase.</div>
+
         <!-- Main -->
-        <div id="main">
-            <!-- Artwork cards will be injected here -->
-        </div>
+        <div id="main"></div>
 
         <!-- Footer -->
         <footer id="footer" class="panel">
@@ -102,28 +104,33 @@
     <!-- Load artworks dynamically -->
     <script>
         const main = document.getElementById('main');
+
         fetch('api/artworks/list.php')
             .then(res => res.json())
             .then(data => {
                 if (!Array.isArray(data)) throw new Error('Invalid response');
+
                 main.innerHTML = data.map(art => `
-          <article class="thumb">
-            <a href="artworks/view.html?id=${art.id}" class="image">
-              <img src="uploads/${art.image}" alt="${art.title}" />
-            </a>
-            <h2>${art.title}</h2>
-            <p>${art.description}</p>
-          </article>
-        `).join('');
+      <article class="thumb">
+        <a href="#" class="image">
+          <img src="${art.photo}" alt="${art.title}" />
+        </a>
+        <h2>${art.title}</h2>
+        <p>${art.description}</p>
+      </article>
+    `).join('');
             })
-            .catch(() => {
+            .catch(error => {
+                console.error("Fetch error:", error);
                 main.innerHTML = `
-          <article class="thumb"><img src="assets/img/color-vibes-ai-generated.avif" alt="" />
-            <h2>Fallback Artwork</h2>
-            <p>Artwork display unavailable. Please check back soon.</p>
-          </article>
-        `;
+      <article class="thumb">
+        <img src="app/assets/img/color-vibes-ai-generated.avif" alt="Fallback" />
+        <h2>Fallback Artwork</h2>
+        <p>Artwork display unavailable. Please check back soon.</p>
+      </article>
+    `;
             });
+
     </script>
 </body>
 

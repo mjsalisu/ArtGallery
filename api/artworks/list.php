@@ -30,7 +30,7 @@ $where = $conditions ? 'WHERE ' . implode(' AND ', $conditions) : '';
 $sql = "SELECT a.artworkID, a.title, a.category, a.type, a.description, a.price, a.quantity, a.photo, a.status,
                u.name AS artist_name
         FROM artworks a
-        JOIN users u ON a.userID = u.artistID
+        JOIN users u ON a.artistID = u.userID
         $where
         ORDER BY a.created_at DESC";
 
@@ -39,7 +39,7 @@ $stmt->execute($params);
 $artworks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($artworks as &$art) {
-    $art['photo'] = '/uploads/' . $art['photo'];
+    $art['photo'] = $art['photo'];
 }
 
 echo json_encode($artworks);

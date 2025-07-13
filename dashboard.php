@@ -33,6 +33,7 @@ if (!isset($_SESSION['user_id'])) {
             <div class="content">
                 <div class="container-fluid">
                     <h4 class="page-title">Marketplace</h4>
+                    <p class="page-description">Explore and purchase artworks from our marketplace.</p>
 
                     <!-- Filter Form -->
                     <form id="filterForm" class="mb-3">
@@ -59,25 +60,8 @@ if (!isset($_SESSION['user_id'])) {
                         </div>
                     </form>
 
-                    <!-- Artwork Cards -->
-                    <div class="row">
-                        <?php for($i = 0; $i < 4; $i++): ?>
-                        <div class="col-md-3 mb-3">
-                            <a href="./artwork-cart.html">
-                                <div class="card text-white position-relative">
-                                    <img src="./assets/img/sample<?=$i?>.jpg" class="card-img">
-                                    <div class="card-img-overlay d-flex justify-content-center align-items-center">
-                                        <p class="card-text">Artwork description</p>
-                                    </div>
-                                    <span
-                                        class="badge badge-count position-absolute top-0 start-0 m-2 bg-primary px-3 py-1">
-                                        ₦45,000
-                                    </span>
-                                </div>
-                            </a>
-                        </div>
-                        <?php endfor; ?>
-                    </div>
+                    <!-- Dynamic Artwork cards will be inserted here -->
+                    <div class="row" id="artworkContainer"></div>
 
                 </div>
             </div>
@@ -86,5 +70,72 @@ if (!isset($_SESSION['user_id'])) {
 
     <?php include('components/scripts.html'); ?>
 </body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("filterForm");
+            const container = document.getElementById("artworkContainer");
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                loadArtworks(new FormData(form));
+            });
+
+            // Initial load
+            loadArtworks();
+
+            function loadArtworks(formData = null) {
+                let query = "";
+                if (formData) {
+                    const params = new URLSearchParams();
+                    for (const [key, value] of formData.entries()) {
+                        if (value.trim() !== "") {
+                            const map = {
+                                price_min: "minPrice",
+                                price_max: "maxPrice"
+                            };
+                            params.append(map[key] || key, value);
+                        }
+                    }
+                    query = "?" + params.toString();
+                }
+
+                fetch("api/artworks/list.php" + query)
+                    .then(res => res.json())
+                    .then(data => {
+                        container.innerHTML = "";
+
+                        if (data.length === 0) {
+                            container.innerHTML = "<p class='text-muted'>No artworks found.</p>";
+                            return;
+                        }
+
+                        data.forEach((art) => {
+                            const card = document.createElement("div");
+                            card.className = "col-md-3 mb-3";
+
+                            card.innerHTML = `
+                                <a href="view_artwork.php?id=${art.artworkID}">
+                                    <div class="card text-white position-relative">
+                                        <img src="${art.photo}" class="card-img" alt="${art.title}">
+                                        <div class="card-img-overlay d-flex justify-content-center align-items-center">
+                                            <p class="card-text">${art.description || 'Artwork description'}</p>
+                                        </div>
+                                        <span class="badge badge-count position-absolute top-0 start-0 m-2 bg-primary px-3 py-1">
+                                            ₦${parseInt(art.price).toLocaleString()}
+                                        </span>
+                                    </div>
+                                </a>
+                            `;
+
+                            container.appendChild(card);
+                        });
+                    })
+                    .catch(err => {
+                        console.error("Failed to fetch artworks:", err);
+                        container.innerHTML = "<p class='text-danger'>Failed to load artworks.</p>";
+                    });
+            }
+        });
+    </script>
 
 </html>
